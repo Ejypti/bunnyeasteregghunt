@@ -118,6 +118,7 @@
   <audio id="collectSound" src="collect.mp3"></audio>
   <audio id="lifeLostSound" src="life-lost.mp3"></audio>
   <audio id="carrotSound" src="carrot.mp3"></audio>
+  <audio id="startSound" src="start.mp3"></audio>
 
 <script>
   const canvas = document.getElementById('gameCanvas');
@@ -378,24 +379,28 @@
     }
   }
 
-  function startGame() {
-    if (!musicMuted) bgMusic.play().catch(() => {});
-    gameStarted = true;
-    isPaused = false;
-    startScreen.style.display = 'none';
-    pauseOverlay.style.display = 'none';
-    score = 0;
-    level = 1;
-    eggInterval = 1000;
-    missedEggs = 0;
-    lives = 3;
-    eggs.length = 0;
-    carrots.length = 0;
-    Object.assign(bunny, { x: 100, y: 0, dy: 0, onGround: false });
-    updateScoreDisplay();
-    updateLivesDisplay();
-    restartEggGeneration();
-  }
+
+function startGame() {
+  const startSound = document.getElementById('startSound');
+  if (!sfxMuted) startSound.play().catch(() => {});
+  if (!musicMuted) bgMusic.play().catch(() => {});
+  gameStarted = true;
+  isPaused = false;
+  startScreen.style.display = 'none';
+  pauseOverlay.style.display = 'none';
+  score = 0;
+  level = 1;
+  eggInterval = 1000;
+  missedEggs = 0;
+  lives = 3;
+  eggs.length = 0;
+  carrots.length = 0;
+  Object.assign(bunny, { x: 100, y: 0, dy: 0, onGround: false });
+  updateScoreDisplay();
+  updateLivesDisplay();
+  restartEggGeneration();
+}
+
 
   function restartEggGeneration() {
     clearInterval(eggTimer);
