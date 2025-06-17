@@ -23,12 +23,12 @@
       z-index: 2;
       display: flex; gap: 5px;
     }
-.heart {
-  width: 30px;
-  height: 30px;
-  transition: opacity 0.3s ease;
-  vertical-align: middle;
-}
+  .heart {
+    width: 30px;
+    height: 30px;
+    transition: opacity 0.3s ease;
+    vertical-align: middle;
+  }
     .top-controls {
       position: absolute; top: 5px; right: 10px;
       display: flex; gap: 5px; z-index: 3;
@@ -123,22 +123,27 @@
   const canvas = document.getElementById('gameCanvas');
   const ctx = canvas.getContext('2d');
 
-  const bunnySprites = {
-    blue: new Image(), pink: new Image(),
-    grey: new Image(), brown: new Image()
-  };
-  bunnySprites.blue.src = 'bunny-blue.png';
-  bunnySprites.pink.src = 'bunny-pink.png';
-  bunnySprites.grey.src = 'bunny-grey.png';
+  // --- Preload normal and carrot sprites ---
+  const bunnySprites = { blue: new Image(), pink: new Image(), grey: new Image(), brown: new Image() };
+  const carrotBunnySprites = { blue: new Image(), pink: new Image(), grey: new Image(), brown: new Image() };
+  bunnySprites.blue.src  = 'bunny-blue.png';
+  bunnySprites.pink.src  = 'bunny-pink.png';
+  bunnySprites.grey.src  = 'bunny-grey.png';
   bunnySprites.brown.src = 'bunny-brown.png';
+  carrotBunnySprites.blue.src  = 'bunny-blue-carrot.png';
+  carrotBunnySprites.pink.src  = 'bunny-pink-carrot.png';
+  carrotBunnySprites.grey.src  = 'bunny-grey-carrot.png';
+  carrotBunnySprites.brown.src = 'bunny-brown-carrot.png';
 
   const carrotImage = new Image();
   carrotImage.src = 'carrot.png';
 
   let carrots = [];
 
+  // Selected bunny color and current sprite
   let selectedColor = localStorage.getItem('selectedBunny') || 'blue';
   let bunnySprite = bunnySprites[selectedColor];
+  let carrotModeTimer = null;
 
   document.querySelectorAll('.character-option').forEach(option => {
     if (option.dataset.color === selectedColor) option.classList.add('selected');
@@ -319,13 +324,22 @@
         if (lives < 3) {
           lives++;
           updateLivesDisplay();
-          if (!sfxMuted) carrotSound.play().catch(() => {});
         }
+        if (!sfxMuted) carrotSound.play().catch(() => {});
+
+        // --- Enter carrot mode ---
+        clearTimeout(carrotModeTimer);
+        bunnySprite = carrotBunnySprites[selectedColor];
+        carrotModeTimer = setTimeout(() => {
+          bunnySprite = bunnySprites[selectedColor];
+        }, 5000);
+
         return false;
       }
       return c.y <= canvas.height;
     });
   }
+
 
   function generateEgg() {
     eggs.push({
