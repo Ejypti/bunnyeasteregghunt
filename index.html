@@ -507,6 +507,32 @@ function togglePause() {
     muteSfxBtn.textContent = sfxMuted ? '🔈' : '🔊';
     localStorage.setItem('sfxMuted', sfxMuted);
   };
+
+
+function isIosDevice() {
+  return /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.matchMedia('(display-mode: standalone)').matches;
+}
+
+window.addEventListener('load', () => {
+  if (isIosDevice()) {
+    setTimeout(() => {
+      document.getElementById('iosPrompt').style.display = 'block';
+    }, 3000); // show after 3 seconds
+  }
+});
+
+
 </script>
+
+<div id="iosPrompt" style="display: none; position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+  background: #fff8dc; padding: 12px 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  font-size: 1rem; z-index: 10; color: #333; text-align: center;">
+  📱 Tap <span style="font-weight: bold;">Share</span> then <span style="font-weight: bold;">“Add to Home Screen”</span>
+  <br><button onclick="document.getElementById('iosPrompt').style.display='none'"
+    style="margin-top: 8px; padding: 6px 12px; background: #f9a825; border: none; border-radius: 8px; color: #3e2723; font-size: 1rem;">
+    Got it!
+  </button>
+</div>
+
 </body>
 </html>
