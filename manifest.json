@@ -1,8 +1,8 @@
 {
+  "id": "bunnygame1",
+  "description": "Game",
   "name": "Bunny Easter Egg Hunt",
   "theme_color": "#000000",
   "background_color": "#000000",
-  "short_name": "bunnygame",
-  "id": "bunnygame",
-  "description": "Game"
+  "short_name": "bunnygame"
 }
