@@ -1,1 +1,1 @@
-Copyrighted by Jared Reynolds, Sam Altman (OpenAI)
+Copyrighted by Jared Reynolds (Ejypti), Sam Altman (OpenAI)
